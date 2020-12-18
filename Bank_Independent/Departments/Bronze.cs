@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Bank_System
+namespace Bank_Independent
 {
     class Bronze<T> : Department<Client> 
         where T : Common

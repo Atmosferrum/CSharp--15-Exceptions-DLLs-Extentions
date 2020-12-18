@@ -6,11 +6,8 @@ using System.Threading.Tasks;
 
 namespace Bank_System
 {
-    class Gold<T> : Department<Client>
-        where T : Royal
+    class MyIncorrectDataException : Exception
     {
-        public Gold(string Name)
-               : base(Name)
-        { }
+        public MyIncorrectDataException(string Msg) : base(Msg) {}
     }
 }

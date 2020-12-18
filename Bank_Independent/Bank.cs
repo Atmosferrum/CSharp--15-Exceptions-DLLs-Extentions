@@ -1,9 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace Bank_System
+namespace Bank_Independent
 {
-    static class Bank
+    public static class Bank
     {
         public static ObservableCollection<Department<Client>> Departments = new ObservableCollection<Department<Client>>(); //Main Bank collection
 
@@ -85,17 +89,35 @@ namespace Bank_System
                                                                               $"Name {(char)clientRandom.Next(128)}",
                                                                                $"Name {(char)clientRandom.Next(128)}",
                                                                                Convert.ToString(clientRandom.Next(2_000)),
-                                                                               Convert.ToString(clientRandom.Next(1,6)),
+                                                                               Convert.ToString(clientRandom.Next(1, 6)),
                                                                                Convert.ToString(DateRandomizer())));
         }
-        
+
+        public static void AddClientToDepartment(this Client client, int clientClassIndex, params string[] args)
+        {
+            if (args.Length >= 5)
+                Departments[0].Departments[clientClassIndex].Add(ManageClient(clientClassIndex,
+                                                                              args[0],
+                                                                              args[1],
+                                                                              args[2],
+                                                                              args[3],
+                                                                              args[4]));
+            else
+                Departments[0].Departments[clientClassIndex].Add(ManageClient(clientClassIndex,
+                                                                              $"Name {(char)clientRandom.Next(128)}",
+                                                                               $"Name {(char)clientRandom.Next(128)}",
+                                                                               Convert.ToString(clientRandom.Next(2_000)),
+                                                                               Convert.ToString(clientRandom.Next(1, 6)),
+                                                                               Convert.ToString(DateRandomizer())));
+        }
+
         /// <summary>
         /// Method to EDIT Client
         /// </summary>
         /// <param name="oldClient">Client to EDIT</param>
         /// <param name="clientClassIndex">Client class Index</param>
         /// <param name="args">New Client Data</param>
-        public static void EditClient(Client oldClient,
+        public static void EditClient(this Client oldClient,
                                       int clientClassIndex,
                                       params string[] args)
         {

@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 
-namespace Bank_System
+namespace Bank_Independent
 {
-    class Department<T> : ICollection<T>, IEnumerable<T>
+    public class Department<T> : ICollection<T>, IEnumerable<T>
         where T : Client
     {
         public ObservableCollection<Department<Client>> Departments { get; set; } //Collection of inner Departments

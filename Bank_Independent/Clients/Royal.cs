@@ -4,18 +4,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Bank_System
+namespace Bank_Independent
 {
-    class Aristocrat : Client
+    class Royal : Client
     {
 
         #region Constructor;
 
-        public Aristocrat(string Name,
-                          string LastName,
-                          int Deposit,
-                          float Percent,
-                          DateTime DateOfDeposit)
+        public Royal(string Name,
+                     string LastName,
+                     int Deposit,
+                     float Percent,
+                     DateTime DateOfDeposit)
             : base(Name,
                    LastName,
                    Deposit,

@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{33954AAE-AF1C-4EF1-BB00-B24094FDF3E3}</ProjectGuid>
+    <ProjectGuid>{35CF4B65-1F66-4B33-BB4A-6E7D93264831}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>Bank_System</RootNamespace>
-    <AssemblyName>Bank_System</AssemblyName>
+    <RootNamespace>Test_Window</RootNamespace>
+    <AssemblyName>Test_Window</AssemblyName>
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -55,16 +55,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="MyIncorrectDataException.cs" />
-    <Compile Include="Windows\AddClientWindow.xaml.cs">
-      <DependentUpon>AddClientWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Windows\EditClientWindow.xaml.cs">
-      <DependentUpon>EditClientWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Windows\TransferWindow.xaml.cs">
-      <DependentUpon>TransferWindow.xaml</DependentUpon>
-    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -77,18 +67,6 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Windows\AddClientWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Windows\EditClientWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Windows\TransferWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -114,15 +92,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config">
-      <SubType>Designer</SubType>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Bank_Independent\Bank_Independent.csproj">
-      <Project>{e92b2623-aa7a-4d41-bd32-c407a836cd7e}</Project>
-      <Name>Bank_Independent</Name>
-    </ProjectReference>
+    <None Include="App.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

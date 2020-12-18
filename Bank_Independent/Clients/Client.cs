@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Bank_System
+namespace Bank_Independent
 {
     public class Client : IEquatable<Client>
     {

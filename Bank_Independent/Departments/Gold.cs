@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Bank_System
+namespace Bank_Independent
 {
-    class Silver<T> : Department<Client>
-        where T : Aristocrat
+    class Gold<T> : Department<Client>
+        where T : Royal
     {
-        public Silver(string Name)
+        public Gold(string Name)
                : base(Name)
         { }
     }

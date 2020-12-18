@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Bank_Independent;
 
 namespace Bank_System.Windows
 {
@@ -82,23 +83,49 @@ namespace Bank_System.Windows
         /// <param name="e"></param>
         private void BTN_Clients_EditClient(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                if (TB_EditClientName.Text == "") throw new FormatException();
+
+                if (TB_EditClientLastName.Text == "") throw new FormatException();
+
+                if (!depositIsValid) throw new MyIncorrectDataException("Invalid Deposit!");
+
+                if (!percentIsValid) throw new MyIncorrectDataException("Invalid Percent!");
+            }
+            catch (FormatException exception)
+            {
+                MessageBox.Show(exception.Message,
+                                $"{AddClientWindow.TitleProperty.Name}",
+                                MessageBoxButton.OK,
+                                MessageBoxImage.Error);
+            }
+            catch (MyIncorrectDataException exception)
+            {
+                MessageBox.Show(exception.Message,
+                                $"{AddClientWindow.TitleProperty.Name}",
+                                MessageBoxButton.OK,
+                                MessageBoxImage.Error);
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message,
+                               $"{AddClientWindow.TitleProperty.Name}",
+                               MessageBoxButton.OK,
+                               MessageBoxImage.Error);
+            }
+
             if (inputDataIsCorrect)
             {
-                Bank.EditClient(client,
-                                clientClassIndex,
-                                TB_EditClientName.Text,
-                                TB_EditClientLastName.Text,
-                                Convert.ToString(deposit),
-                                Convert.ToString(percent),
-                                Convert.ToString(dateOfDeposit));
+                client.EditClient(clientClassIndex,
+                                  TB_EditClientName.Text,
+                                  TB_EditClientLastName.Text,
+                                  Convert.ToString(deposit),
+                                  Convert.ToString(percent),
+                                  Convert.ToString(dateOfDeposit));
 
                 CloseWindow();
             }
-            else
-                MessageBox.Show($"The DATA you are entering is wrong!",
-                                $"{EditClientWindow.TitleProperty.Name}",
-                                MessageBoxButton.OK,
-                                MessageBoxImage.Error);
         }
 
         /// <summary>

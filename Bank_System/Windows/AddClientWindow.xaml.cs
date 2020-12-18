@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows;
+using Bank_Independent;
 
 namespace Bank_System.Windows
 {
@@ -57,21 +58,50 @@ namespace Bank_System.Windows
         /// <param name="e"></param>
         private void BTN_Clients_AddClient(object sender, RoutedEventArgs e)
         {
-            if (inputDataIsCorrect)
+            
+
+            try
             {
-                Bank.AddNewClient(clientClassIndex,
-                                   TB_AddClientName.Text,
-                                   TB_AddClientLastName.Text,
-                                   Convert.ToString(deposit),
-                                   Convert.ToString(percent),
-                                   Convert.ToString(DateTime.Now));
-                CloseWindow();
+                if (TB_AddClientName.Text == "") throw new FormatException();
+
+                if(TB_AddClientLastName.Text == "") throw new FormatException();
+
+                if (!depositIsValid) throw new MyIncorrectDataException("Invalid Deposit!");
+
+                if (!percentIsValid) throw new MyIncorrectDataException("Invalid Percent!");
             }
-            else
-                MessageBox.Show($"The DATA you are entering is wrong!",
+            catch (FormatException exception)
+            {
+                MessageBox.Show(exception.Message,
                                 $"{AddClientWindow.TitleProperty.Name}",
                                 MessageBoxButton.OK,
                                 MessageBoxImage.Error);
+            }
+            catch(MyIncorrectDataException exception)
+            {
+                MessageBox.Show(exception.Message,
+                                $"{AddClientWindow.TitleProperty.Name}",
+                                MessageBoxButton.OK,
+                                MessageBoxImage.Error);
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message,
+                               $"{AddClientWindow.TitleProperty.Name}",
+                               MessageBoxButton.OK,
+                               MessageBoxImage.Error);
+            }
+
+            if (inputDataIsCorrect)
+            {
+                Bank.AddNewClient(clientClassIndex,
+                                  TB_AddClientName.Text,
+                                  TB_AddClientLastName.Text,
+                                  Convert.ToString(deposit),
+                                  Convert.ToString(percent),
+                                  Convert.ToString(DateTime.Now));
+                CloseWindow();
+            }
         }
 
         /// <summary>
@@ -79,7 +109,7 @@ namespace Bank_System.Windows
         /// </summary>
         private void CloseWindow()
         {
-            mainWindow.LoadClientsToLV();            
+            mainWindow.LoadClientsToLV();
             this.Close();
         }
     }

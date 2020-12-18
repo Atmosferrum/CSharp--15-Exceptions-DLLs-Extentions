@@ -1,6 +1,8 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using Bank_Independent;
 
 namespace Bank_System.Windows
 {
@@ -29,8 +31,8 @@ namespace Bank_System.Windows
 
         private bool inputDataIsCorrect => selectedClient  //Bool to CHECK if input Data is correct
                                         && amountIsValid;
-                                        //&& TB_AmountToTransfer.Text != null
-                                        //&& TB_AmountToTransfer.Text != "";
+        //&& TB_AmountToTransfer.Text != null
+        //&& TB_AmountToTransfer.Text != "";
 
         private Department<Client> allClients = new Department<Client>("Temp"); //List of ALL Clients for ComboBox
 
@@ -66,7 +68,7 @@ namespace Bank_System.Windows
             From = fromClient.Balance;
 
             CB_ToClient.ItemsSource = allClients;
-        } 
+        }
 
         #endregion Constructor
 
@@ -81,15 +83,15 @@ namespace Bank_System.Windows
         {
             if (inputDataIsCorrect)
             {
-                Bank.Departments[0].Departments[clientClassIndex].Transfer(fromClient, 
+                Bank.Departments[0].Departments[clientClassIndex].Transfer(fromClient,
                                                                           (CB_ToClient.SelectedItem as Client),
                                                                           Amount);
                 CloseWindow();
             }
             else
             {
-                string message = !parsedAmount ? "Please input only NUMBERS!" 
-                               : !amountIsValid ? "Please input MORE than 0 and LESS then deposit of Client you're trying to transfer from!" 
+                string message = !parsedAmount ? "Please input only NUMBERS!"
+                               : !amountIsValid ? "Please input MORE than 0 and LESS then deposit of Client you're trying to transfer from!"
                                : !selectedClient ? "Please selec Client to recive transfer!"
                                : "The DATA you are entering is wrong!";
 
@@ -124,7 +126,7 @@ namespace Bank_System.Windows
             if (TB_AmountToTransfer.Text != null &&
                 TB_AmountToTransfer.Text != "")
                 ShowResults();
-        } 
+        }
 
         #endregion Element's Mthods
 
@@ -135,24 +137,40 @@ namespace Bank_System.Windows
         /// </summary>
         private void ShowResults()
         {
+            try
+            {
+                if (!selectedClient) throw new FormatException();
+                else if (!parsedAmount) throw new MyIncorrectDataException("Please input only NUMBERS!");
+                else if (!amountIsValid) throw new MyIncorrectDataException("Please input MORE than 0 and LESS then deposit of Client you're trying to transfer from!");
+            }
+            catch (FormatException exception)
+            {
+                MessageBox.Show(exception.Message,
+                                $"{AddClientWindow.TitleProperty.Name}",
+                                MessageBoxButton.OK,
+                                MessageBoxImage.Error);
+            }
+            catch (MyIncorrectDataException exception)
+            {
+                MessageBox.Show(exception.Message,
+                                $"{AddClientWindow.TitleProperty.Name}",
+                                MessageBoxButton.OK,
+                                MessageBoxImage.Error);
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message,
+                               $"{AddClientWindow.TitleProperty.Name}",
+                               MessageBoxButton.OK,
+                               MessageBoxImage.Error);
+            }
+
             if (inputDataIsCorrect)
             {
                 FromResult = From - Amount;
                 ToResult = To + Amount;
                 TB_AmountResult.Text = $"{From} - {Amount} = {FromResult} -> {To} + {Amount} = {ToResult}";
             }
-            else
-            {
-                string message = !parsedAmount ? "Please input only NUMBERS!"
-                               : !amountIsValid ? "Please input MORE than 0 and LESS then deposit of Client you're trying to transfer from!"
-                               : !selectedClient ? "Please selec Client to recive transfer!"
-                               : "The DATA you are entering is wrong!";
-
-                MessageBox.Show(message,
-                $"{TransferWindow.TitleProperty.Name}",
-                MessageBoxButton.OK,
-                MessageBoxImage.Error);
-            }            
         }
 
         /// <summary>
